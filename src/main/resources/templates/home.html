@@ -2,45 +2,172 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Home - Data Mahasiswa</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>High Scores - Data Mahasiswa</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; text-align: center; }
-        th, td { border: 1px solid #ddd; padding: 12px; }
-        th { background-color: #007bff; color: white; }
-        .btn-tambah { background-color: #28a745; color: white; padding: 10px 15px; text-decoration: none; border-radius: 4px; }
+        /* Latar belakang grid dan warna gelap yang sama dengan login */
+        body {
+            background-color: #0b0b0b;
+            background-image:
+                linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            color: #fff;
+            font-family: 'Press Start 2P', monospace;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Efek layar TV jadul */
+        .scanlines {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        /* Kontainer utama (Container) */
+        .container {
+            width: 100%;
+            max-width: 900px;
+            z-index: 10;
+        }
+
+        /* Judul Halaman */
+        h2 {
+            color: #ffff00; /* Warna kuning neon ala Pac-Man */
+            text-align: center;
+            text-shadow: 3px 3px #ff0000;
+            font-size: 24px;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Tombol Tambah Data */
+        .btn-tambah {
+            display: inline-block;
+            background-color: transparent;
+            color: #00ff00; /* Warna hijau neon */
+            border: 3px solid #00ff00;
+            padding: 12px 20px;
+            text-decoration: none;
+            font-size: 12px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+        }
+
+        .btn-tambah:hover {
+            background-color: #00ff00;
+            color: #000;
+            box-shadow: 0 0 20px #00ff00;
+        }
+
+        /* Desain Tabel Ala Papan Skor Ding-Dong */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background-color: rgba(10, 10, 10, 0.9);
+            border: 4px solid #00ffff; /* Border cyan neon */
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+            font-size: 12px;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 2px solid #333;
+        }
+
+        /* Bagian Kepala Tabel (Header) */
+        th {
+            background-color: #002222;
+            color: #00ffff;
+            text-transform: uppercase;
+            border-bottom: 4px solid #00ffff;
+            letter-spacing: 1px;
+        }
+
+        /* Warna teks data di dalam tabel */
+        td {
+            color: #ff00ff; /* Warna magenta neon */
+            line-height: 1.5;
+        }
+
+        /* Menghilangkan border bawah pada baris terakhir agar rapi */
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Efek nyala saat kursor diarahkan ke baris data (Hover) */
+        tbody tr:hover td {
+            background-color: rgba(255, 0, 255, 0.1);
+            color: #fff;
+            text-shadow: 0 0 5px #ff00ff;
+            cursor: pointer;
+        }
+
+        /* Pesan jika tabel kosong */
+        .empty-data {
+            color: #ff0000; /* Merah neon */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: blink 1.5s infinite;
+        }
+
+        /* Animasi teks berkedip */
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
     </style>
 </head>
 <body>
 
-<h2>Data Mahasiswa</h2>
+<div class="scanlines"></div>
 
-<a href="/form" class="btn-tambah">+ Tambah Data</a>
+<div class="container">
+    <h2>High Scores (Data)</h2>
 
-<table>
-    <thead>
-    <tr>
-        <th>No</th>
-        <th>Nama</th>
-        <th>NIM</th>
-        <th>Jenis Kelamin</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:if="${#lists.isEmpty(users)}">
-        <td colspan="4" style="text-align: center; color: #666; background-color: #f9f9f9;">
-            Belum ada data
-        </td>
-    </tr>
+    <a href="/form" class="btn-tambah">Insert Player</a>
 
-    <tr th:each="user, status : ${users}">
-        <td th:text="${status.count}">1</td>
-        <td th:text="${user.nama}">Nama Mahasiswa</td>
-        <td th:text="${user.nim}">NIM Mahasiswa</td>
-        <td th:text="${user.jenisKelamin}">Jenis Kelamin</td>
-    </tr>
-    </tbody>
-</table>
+    <table>
+        <thead>
+        <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>ID (NIM)</th>
+            <th>Class</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${#lists.isEmpty(users)}">
+            <td colspan="4" style="padding: 40px;">
+                <span class="empty-data">NO PLAYERS FOUND</span>
+            </td>
+        </tr>
+
+        <tr th:each="user, status : ${users}">
+            <td th:text="${status.count}" style="color: #ffff00;">1</td>
+            <td th:text="${user.nama}">Nama Mahasiswa</td>
+            <td th:text="${user.nim}">NIM Mahasiswa</td>
+            <td th:text="${user.jenisKelamin}">Jenis Kelamin</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
 </body>
 </html>

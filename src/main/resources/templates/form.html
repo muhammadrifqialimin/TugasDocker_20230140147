@@ -2,43 +2,168 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Form Data Mahasiswa</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insert Player Data</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input, select { width: 100%; max-width: 400px; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; }
-        button { background-color: #28a745; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 4px; }
+        /* Latar belakang grid retro yang konsisten */
+        body {
+            background-color: #0b0b0b;
+            background-image:
+                linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Press Start 2P', monospace;
+        }
+
+        /* Efek garis layar TV CRT */
+        .scanlines {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        /* Kotak form ala menu game */
+        .form-card {
+            background-color: rgba(10, 10, 10, 0.95);
+            padding: 40px;
+            border: 4px solid #00ff00; /* Border hijau neon */
+            box-shadow: 0 0 20px #00ff00, inset 0 0 10px #00ff00;
+            width: 100%;
+            max-width: 500px;
+            text-align: left;
+            z-index: 10;
+        }
+
+        h2 {
+            color: #00ff00;
+            text-shadow: 2px 2px #005500;
+            margin-bottom: 30px;
+            font-size: 18px;
+            text-align: center;
+            line-height: 1.5;
+            text-transform: uppercase;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #ffff00; /* Kuning neon */
+            font-size: 10px;
+        }
+
+        /* Styling untuk Input teks dan Dropdown (Select) */
+        input[type="text"], select {
+            width: 100%;
+            padding: 15px;
+            background-color: #000;
+            border: 2px solid #ffff00;
+            color: #fff;
+            box-sizing: border-box;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 12px;
+            outline: none;
+            appearance: none; /* Menghilangkan panah bawaan dropdown di beberapa browser */
+        }
+
+        /* Agar opsi di dropdown juga terbaca jelas */
+        option {
+            background-color: #000;
+            color: #fff;
+        }
+
+        /* Efek menyala saat input dipilih */
+        input[type="text"]:focus, select:focus {
+            border-color: #00ff00;
+            box-shadow: 0 0 15px #00ff00;
+            color: #00ff00;
+        }
+
+        /* Tombol Simpan (Save) */
+        button {
+            width: 100%;
+            background-color: transparent;
+            color: #00ff00;
+            border: 4px solid #00ff00;
+            padding: 15px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 12px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #00ff00;
+            color: #000;
+            box-shadow: 0 0 20px #00ff00;
+        }
+
+        /* Link Kembali bergaya retro */
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            color: #ff00ff; /* Magenta neon */
+            text-decoration: none;
+            font-size: 10px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: #fff;
+            text-shadow: 0 0 10px #ff00ff;
+        }
     </style>
 </head>
 <body>
 
-<h2>Tambah Data Mahasiswa</h2>
+<div class="scanlines"></div>
 
-<form action="/form" method="post">
-    <div class="form-group">
-        <label for="nama">Nama:</label>
-        <input type="text" id="nama" name="nama" required>
-    </div>
+<div class="form-card">
+    <h2>New Player Entry</h2>
 
-    <div class="form-group">
-        <label for="nim">NIM:</label>
-        <input type="text" id="nim" name="nim" required>
-    </div>
+    <form action="/form" method="post">
+        <div class="form-group">
+            <label for="nama">Player Name:</label>
+            <input type="text" id="nama" name="nama" required autocomplete="off">
+        </div>
 
-    <div class="form-group">
-        <label for="jenisKelamin">Jenis Kelamin:</label>
-        <select id="jenisKelamin" name="jenisKelamin" required>
-            <option value="Laki-laki">Laki-laki</option>
-            <option value="Perempuan">Perempuan</option>
-        </select>
-    </div>
+        <div class="form-group">
+            <label for="nim">Player ID (NIM):</label>
+            <input type="text" id="nim" name="nim" required autocomplete="off">
+        </div>
 
-    <button type="submit">Simpan Data</button>
-</form>
+        <div class="form-group">
+            <label for="jenisKelamin">Class (Gender):</label>
+            <select id="jenisKelamin" name="jenisKelamin" required>
+                <option value="Laki-laki">MALE</option>
+                <option value="Perempuan">FEMALE</option>
+            </select>
+        </div>
 
-<br>
-<a href="/home">Kembali ke Home</a>
+        <button type="submit">Save Data</button>
+    </form>
+
+    <a href="/home" class="back-link">&lt; Return to Menu</a>
+</div>
 
 </body>
 </html>
